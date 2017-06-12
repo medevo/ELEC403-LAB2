@@ -89,12 +89,12 @@ y_raw = conv(x,tapFilter);
 y_opt = y_raw(3:1026);
 
 subplot(2,3,6);
-xlabel('Samples')
-title('Signal Y versus signal X') 
 plot(y_opt,'-b');
 hold on
 plot(s,'-r')
 legend('Y','S')
+xlabel('Samples')
+title('Signal Y versus signal X')
 
 errorAfter = 20*log(norm(s)/norm(y_opt-s))
 errorBefore = 20*log(norm(s)/norm(x-s))
