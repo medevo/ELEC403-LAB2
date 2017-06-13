@@ -7,7 +7,7 @@ h2 = 0.35361297576;
 a = [1];
 b = [h0 h1 h2 h1 h0];
 [H,w] = freqz(b,a,1024);
-%figure;
+figure('name','Comparsion of Spectrums and Signals');
 %plot(w,abs(H));
 
 clear;
@@ -50,7 +50,7 @@ plot(f,abs(xf))
 axis([-256 256 0 350])
 grid
 xlabel('Frequency in Hz')
-title('Spectrum of received signal x[n]') 
+title('Spectrum of Received Overall Signal X(e^{j\omega})') 
 
 %Fourier plot of s
 subplot(2,3,2);
@@ -61,7 +61,7 @@ plot(f,abs(sf))
 axis([-256 256 0 350])
 grid
 xlabel('Frequency in Hz')
-title('Spectrum of received signal s[n]') 
+title('Spectrum of Denoised Received Signal S(e^{j\omega})') 
 
 %Fourier plot of w
 subplot(2,3,3);
@@ -72,17 +72,19 @@ plot(f,abs(wf))
 axis([-256 256 0 350])
 grid
 xlabel('Frequency in Hz')
-title('Spectrum of received signal w[n]') 
+title('Spectrum of Received Noise W(e^{j\omega})') 
 
 subplot(2,3,4);
 plot(s);
 xlabel('Samples')
 title('Signal S') 
+xlim([0 1024])
 
 subplot(2,3,5);
 plot(x)
 xlabel('Samples')
 title('Signal X') 
+xlim([0 1024])
 
 tapFilter = [h0 h1 h2 h1 h0];
 y_raw = conv(x,tapFilter);
@@ -95,6 +97,8 @@ plot(s,'-r')
 legend('Y','S')
 xlabel('Samples')
 title('Signal Y versus signal X')
+xlim([0 1024])
+
 
 errorAfter = 20*log(norm(s)/norm(y_opt-s))
 errorBefore = 20*log(norm(s)/norm(x-s))
@@ -109,31 +113,34 @@ y_opt1 = y_raw1(3:1026);
 y_opt2 = y_raw2(3:1026);
 y_opt3 = y_raw3(3:1026);
 
-figure;
+figure('name','Comparsion of Signals with Varying Filter Cutoff Values');
 subplot(1,3,1);
 hold on;
 plot(y_opt1,'-b');
 plot(s,'-r')
 xlabel('Samples')
-title('Filter Cutoff w = 0.1') 
+title('Filter Cutoff \omega = 0.1') 
+xlim([0 1024])
 
 subplot(1,3,2);
 hold on;
 plot(y_opt2,'-b');
 plot(s,'-r')
 xlabel('Samples')
-title('Filter Cutoff w = 0.3') 
+title('Filter Cutoff \omega = 0.3') 
+xlim([0 1024])
 
 subplot(1,3,3);
 hold on;
 plot(y_opt3,'-b');
 plot(s,'-r')
 xlabel('Samples')
-title('Filter Cutoff w = 0.6') 
+title('Filter Cutoff \omega = 0.6') 
+xlim([0 1024])
 
-snrfilter1After = 20*log(norm(s)/norm(y_opt1-s))
-snrfilter2After = 20*log(norm(s)/norm(y_opt2-s))
-snrfilter3After = 20*log(norm(s)/norm(y_opt3-s))
+snrfilteromega1After = 20*log(norm(s)/norm(y_opt1-s))
+snrfilteromega3After = 20*log(norm(s)/norm(y_opt2-s))
+snrfilteromega6After = 20*log(norm(s)/norm(y_opt3-s))
 
 
 
